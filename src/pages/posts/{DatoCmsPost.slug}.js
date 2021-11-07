@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { graphql } from "gatsby";
 import Container from "../../components/container";
 import Header from "../../components/header";
@@ -9,11 +9,19 @@ import SectionSeparator from "../../components/section-separator";
 import { HelmetDatoCms } from "gatsby-source-datocms";
 
 export default function Post({ data: { site, post, morePosts } }) {
+	const [ef, setEf] = useState(false);
+	useEffect(() => {
+		const f = () => setEf(true);
+		const t = setTimeout(f, 2000)
+		return () => {
+			clearTimeout(t)
+		}
+	}, [setEf])
   return (
     <Container>
       <HelmetDatoCms seo={post.seo} favicon={site.favicon} />
       <Header />
-      <article>
+      <article className={ef?"ef":""}>
         <PostHeader
           title={post.title}
           coverImage={post.coverImage}
